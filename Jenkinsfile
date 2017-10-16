@@ -34,9 +34,9 @@ import jenkins.model.*
 
         stage('sendNotification') {
          
-            def user = hudson.model.User.current();
+            def user = jenkins.model.User.current();
 
-    print user.getProperty(hudson.tasks.Mailer.UserProperty.class).getAddress();
+    print user.getProperty(jenkins.tasks.Mailer.UserProperty.class).getAddress();
     
     String recipient = 'anuj_sharma401@yahoo.com'
 

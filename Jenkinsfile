@@ -94,15 +94,15 @@ try {
                 */
                 sshagent(credentials: ['site-deployer']) {
                     sh 'ls build/archives'
-                    sh 'echo "put build/archives/*.zip archives/" | sftp -o StrictHostKeyChecking=no site-deployer@eggplant.jenkins.io'
+                    //sh 'echo "put build/archives/*.zip archives/" | sftp -o StrictHostKeyChecking=no site-deployer@eggplant.jenkins.io'
                 }
             }
             stage('Publish on Azure') {
                 /* -> https://github.com/Azure/blobxfer
-                Require credential 'BLOBXFER_STORAGEACCOUNTKEY' set to the storage account key */
+                Require credential 'BLOBXFER_STORAGEACCOUNTKEY' set to the storage account key 
                 withCredentials([string(credentialsId: 'BLOBXFER_STORAGEACCOUNTKEY', variable: 'BLOBXFER_STORAGEACCOUNTKEY')]) {
                     sh './scripts/blobxfer upload --local-path /data/_site --storage-account-key $BLOBXFER_STORAGEACCOUNTKEY --storage-account prodjenkinsio --remote-path jenkinsio --recursive --mode file --skip-on-md5-match --file-md5'
-                }
+                }*/
             }
         }
     }
@@ -111,7 +111,7 @@ try {
 catch (exc) {
     echo "Caught: ${exc}"
 
-    String recipient = 'infra@lists.jenkins-ci.org'
+    String recipient = 'anuj_sharma401@yahoo.com'
 
     mail subject: "${env.JOB_NAME} (${env.BUILD_NUMBER}) failed",
             body: "It appears that ${env.BUILD_URL} is failing, somebody should do something about that",

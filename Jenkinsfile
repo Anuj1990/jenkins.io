@@ -27,7 +27,7 @@
             *
             * when not in multibranch: https://issues.jenkins-ci.org/browse/JENKINS-31386
             */
-            checkout scm
+            //checkout scm
         }
 
 

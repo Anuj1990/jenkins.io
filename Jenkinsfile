@@ -15,8 +15,9 @@ def getJobemail() {
     }
 
     def user_id = user.getId()
-    def name = user.getFullName()
-    echo user_id name
+    def name = user.getDisplayName()
+    echo user_id 
+    echo name
     def email_address = null
     def emailProperty = user.getProperty(hudson.tasks.Mailer.UserProperty)
     if(emailProperty != null) {

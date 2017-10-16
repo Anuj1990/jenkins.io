@@ -1,5 +1,9 @@
 #!/usr/bin/env groovy
-import jenkins.model.*
+import hudson.model.AbstractProject
+import hudson.tasks.Mailer
+import hudson.model.User
+
+
 
     node('master') {
         stage('Clean workspace') {
@@ -34,9 +38,13 @@ import jenkins.model.*
 
         stage('sendNotification') {
          
-            def user = jenkins.model.User.current();
-
-    print user.getProperty(jenkins.tasks.Mailer.UserProperty.class).getAddress();
+           def item = hudson.model.Hudson.instance.getItem(env.JOB_NAME) 
+def build = item.getLastBuild()
+def cause = build.getCause(hudson.model.Cause.UserIdCause.class)
+def id = cause.getUserId()
+User u = User.get(id)
+def umail = u.getProperty(Mailer.UserProperty.class)
+print umail.getAddress()
     
     String recipient = 'anuj_sharma401@yahoo.com'
 

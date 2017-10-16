@@ -7,7 +7,8 @@ import hudson.model.User
 def getJobemail() {
     def user = hudson.model.User.current();
     string emailid = user.getProperty(hudson.tasks.Mailer.UserProperty.class).getAddress();
-    return emailid;
+    return "abnc";
+    //return emailid;
 }
 
     node('master') {

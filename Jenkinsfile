@@ -8,8 +8,8 @@ def getJobemail() {
     def user = hudson.model.User.current();
     string emailid = user.getProperty(hudson.tasks.Mailer.UserProperty.class).getAddress();
     echo user;
-    return user.getProperty(hudson.tasks.Mailer.UserProperty.class);
-    //return emailid;
+    //return user.getProperty(hudson.tasks.Mailer.UserProperty.class);
+    return emailid;
 }
 
     node('master') {
@@ -46,7 +46,7 @@ def getJobemail() {
         stage('sendNotification') {
          
            string email = getJobemail();
-            echo email;
+            //echo email;
     
     String recipient = 'anuj_sharma401@yahoo.com'
 

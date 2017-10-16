@@ -65,12 +65,12 @@ try {
                         exit 1
                     fi
 
-                    illegal_htaccess_content="$( find content -name '.htaccess' -type f -exec grep --extended-regexp --invert-match '^(#|ErrorDocument)' {} \\; )"
+                    /*illegal_htaccess_content="$( find content -name '.htaccess' -type f -exec grep --extended-regexp --invert-match '^(#|ErrorDocument)' {} \\; )"
                     if [[ -n "$illegal_htaccess_content" ]] ; then
                         echo "Failing build due to illegal content in .htaccess files, only ErrorDocument is allowed:" >&2
                         echo "$illegal_htaccess_content" >&2
                         exit 1
-                    fi
+                    fi*/
                     '''
             }
         }

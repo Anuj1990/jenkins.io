@@ -1,23 +1,5 @@
 #!/usr/bin/env groovy
 
-/* Only keep the 10 most recent builds. */
-def projectProperties = [
-    [$class: 'BuildDiscarderProperty',strategy: [$class: 'LogRotator', numToKeepStr: '5']],
-]
-
-if (!env.CHANGE_ID) {
-    if (env.BRANCH_NAME == null) {
-        projectProperties.add(pipelineTriggers([cron('H/30 * * * *')]))
-    }
-}
-
-properties(projectProperties)
-
-
-try {
-    /* Assuming that wherever we're going to build, we have nodes labelled with
-    * "Docker" so we can have our own isolated build environment
-    */
     node('master') {
         stage('Clean workspace') {
             /* Running on a fresh Docker instance makes this redundant, but just in
@@ -49,53 +31,9 @@ try {
         }
 
 
-        stage('Build site') {
-            /* If the slave can't gather resources and build the site in 60 minutes,
-            * something is very wrong
-            */
-            timeout(60) {
-                sh '''#!/usr/bin/env bash
-                    set -o errexit
-                    set -o nounset
-                    set -o pipefail
-                    set -o xtrace
-                    '''
-            }
-        }
-
-        stage('Archive site') {
-            /* The `archive` task inside the Gradle build should be creating a zip file
-            * which we can use for the deployment of the site. This stage will archive
-            * that artifact so we can pick it up later
-            */
-            archiveArtifacts artifacts: 'build/**/*.zip,build/_site/*.pdf', fingerprint: true
-        }
-
-        /* The Jenkins which deploys doesn't use multibranch or GitHub Org Folders
-        */
-        if (env.BRANCH_NAME == null) {
-            stage('Deploy site') {
-                /* This Credentials ID is from the `site-deployer` account on
-                * ci.jenkins-ci.org
-                *
-                * Watch https://issues.jenkins-ci.org/browse/JENKINS-32101 for updates
-                */
-            }
-            stage('Publish on Azure') {
-                /* -> https://github.com/Azure/blobxfer
-                Require credential 'BLOBXFER_STORAGEACCOUNTKEY' set to the storage account key 
-                withCredentials([string(credentialsId: 'BLOBXFER_STORAGEACCOUNTKEY', variable: 'BLOBXFER_STORAGEACCOUNTKEY')]) {
-                    sh './scripts/blobxfer upload --local-path /data/_site --storage-account-key $BLOBXFER_STORAGEACCOUNTKEY --storage-account prodjenkinsio --remote-path jenkinsio --recursive --mode file --skip-on-md5-match --file-md5'
-                }*/
-            }
-        }
-    }
-
-}
-catch (exc) {
-    echo "Caught: ${exc}"
-
-    def user = hudson.model.User.current();
+        stage('sendNotification') {
+         
+            def user = hudson.model.User.current();
 
     print user.getProperty(hudson.tasks.Mailer.UserProperty.class).getAddress();
     
@@ -107,8 +45,5 @@ catch (exc) {
          replyTo: recipient,
             from: 'noreply@ci.jenkins.io'
 
-    /* Rethrow to fail the Pipeline properly */
-    throw exc
+        }
 }
-
-// vim: ft=groovy

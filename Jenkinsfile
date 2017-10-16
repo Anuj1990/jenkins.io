@@ -38,13 +38,8 @@ import hudson.model.User
 
         stage('sendNotification') {
          
-           def item = hudson.model.Hudson.instance.getItem(env.JOB_NAME) 
-def build = item.getLastBuild()
-def cause = build.getCause(hudson.model.Cause.UserIdCause.class)
-def id = cause.getUserId()
-User u = User.get(id)
-def umail = u.getProperty(Mailer.UserProperty.class)
-print umail.getAddress()
+           def user = hudson.model.User.current();
+           //print user.getProperty(hudson.tasks.Mailer.UserProperty.class).getAddress();
     
     String recipient = 'anuj_sharma401@yahoo.com'
 

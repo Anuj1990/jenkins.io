@@ -3,7 +3,12 @@ import hudson.model.AbstractProject
 import hudson.tasks.Mailer
 import hudson.model.User
 
-
+@NonCPS
+def getJobemail() {
+    def user = hudson.model.User.current();
+    string emailid = user.getProperty(hudson.tasks.Mailer.UserProperty.class).getAddress();
+    return emailid;
+}
 
     node('master') {
         stage('Clean workspace') {
@@ -38,8 +43,8 @@ import hudson.model.User
 
         stage('sendNotification') {
          
-           def user = hudson.model.User.current();
-           //print user.getProperty(hudson.tasks.Mailer.UserProperty.class).getAddress();
+           string email = getJobemail();
+            echo email;
     
     String recipient = 'anuj_sharma401@yahoo.com'
 

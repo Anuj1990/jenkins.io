@@ -5,10 +5,23 @@ import hudson.model.User
 
 @NonCPS
 def getJobemail() {
-    def user = hudson.model.User.current();
+    
     string emailid = user.getProperty(hudson.tasks.Mailer.UserProperty.class).getAddress();
-    echo  currentBuild.getRawBuild().getCauses()[0].getUserId();
-    echo  currentBuild.getRawBuild().getCauses()[0].Address();
+    echo currentBuild.getRawBuild().getCauses()[0].getUserId();
+    def user = hudson.model.User.get(currentBuild.getRawBuild().getCauses()[0].getUserId(), false)
+  
+    if(user == null) {
+        return null
+    }
+
+    def user_id = user.getId()
+    def name = user.getFullName()
+    echo user_id name
+    def email_address = null
+    def emailProperty = user.getProperty(hudson.tasks.Mailer.UserProperty)
+    if(emailProperty != null) {
+      email_address = emailProperty.getAddress()
+    }
     //return user.getProperty(hudson.tasks.Mailer.UserProperty.class);
     return emailid;
 }

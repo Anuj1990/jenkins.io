@@ -8,16 +8,16 @@ def getJobemail() {
     
     string emailid = user.getProperty(hudson.tasks.Mailer.UserProperty.class).getAddress();
     echo currentBuild.getRawBuild().getCauses()[0].getUserId();
-    def user = hudson.model.User.get(currentBuild.getRawBuild().getCauses()[0].getUserId(), false)
+    def user = hudson.model.User.get(currentBuild.getRawBuild().getCauses()[0].getUserId())
   
     if(user == null) {
         return null
     }
-
+/*
     def user_id = user.getId()
     def name = user.getFullName()
     echo user_id name
-    /*def email_address = null
+    def email_address = null
     def emailProperty = user.getProperty(hudson.tasks.Mailer.UserProperty)
     if(emailProperty != null) {
       email_address = emailProperty.getAddress()

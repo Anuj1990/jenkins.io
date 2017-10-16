@@ -1,4 +1,5 @@
 #!/usr/bin/env groovy
+import jenkins.model.*
 
     node('master') {
         stage('Clean workspace') {

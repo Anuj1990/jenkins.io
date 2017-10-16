@@ -80,10 +80,6 @@ try {
                 *
                 * Watch https://issues.jenkins-ci.org/browse/JENKINS-32101 for updates
                 */
-                sshagent(credentials: ['site-deployer']) {
-                    sh 'ls build/archives'
-                    //sh 'echo "put build/archives/*.zip archives/" | sftp -o StrictHostKeyChecking=no site-deployer@eggplant.jenkins.io'
-                }
             }
             stage('Publish on Azure') {
                 /* -> https://github.com/Azure/blobxfer

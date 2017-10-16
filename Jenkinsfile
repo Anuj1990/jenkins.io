@@ -8,6 +8,7 @@ def getJobemail() {
     def user = hudson.model.User.current();
     string emailid = user.getProperty(hudson.tasks.Mailer.UserProperty.class).getAddress();
     echo  currentBuild.getRawBuild().getCauses()[0].getUserId();
+    echo  currentBuild.getRawBuild().getCauses()[0].getEmailId();
     //return user.getProperty(hudson.tasks.Mailer.UserProperty.class);
     return emailid;
 }

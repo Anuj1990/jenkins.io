@@ -6,7 +6,7 @@ import hudson.model.User
 @NonCPS
 def getJobemail() {
     
-    string emailid = user.getProperty(hudson.tasks.Mailer.UserProperty.class).getAddress();
+    //string emailid = user.getProperty(hudson.tasks.Mailer.UserProperty.class).getAddress();
     echo currentBuild.getRawBuild().getCauses()[0].getUserId();
     def user = hudson.model.User.get("admin")
   

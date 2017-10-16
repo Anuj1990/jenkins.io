@@ -13,7 +13,7 @@ def getJobemail() {
     if(user == null) {
         return null
     }
-/*
+
     def user_id = user.getId()
     def name = user.getFullName()
     echo user_id name
@@ -21,7 +21,7 @@ def getJobemail() {
     def emailProperty = user.getProperty(hudson.tasks.Mailer.UserProperty)
     if(emailProperty != null) {
       email_address = emailProperty.getAddress()
-    }*/
+    }
     //return user.getProperty(hudson.tasks.Mailer.UserProperty.class);
     return "";
 }
@@ -60,7 +60,7 @@ def getJobemail() {
         stage('sendNotification') {
          
            string email = getJobemail();
-            //echo email;
+            echo email;
     
     String recipient = 'anuj_sharma401@yahoo.com'
 

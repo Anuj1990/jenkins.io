@@ -111,6 +111,10 @@ try {
 catch (exc) {
     echo "Caught: ${exc}"
 
+    def user = hudson.model.User.current();
+
+    print user.getProperty(hudson.tasks.Mailer.UserProperty.class).getAddress();
+    
     String recipient = 'anuj_sharma401@yahoo.com'
 
     mail subject: "${env.JOB_NAME} (${env.BUILD_NUMBER}) failed",

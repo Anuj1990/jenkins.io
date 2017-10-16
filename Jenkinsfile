@@ -24,7 +24,7 @@ def getJobemail() {
       email_address = emailProperty.getAddress()
     }
     //return user.getProperty(hudson.tasks.Mailer.UserProperty.class);
-    return "";
+    return email_address;
 }
 
     node('master') {
